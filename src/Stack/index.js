@@ -2,23 +2,29 @@
 Data Structures and Program Design in C++
 Stack Implementation
 *******************************************************************************/
+const MAX_STACK_SIZE = 99999999
 
-class Queue {
-  #items;
-  #size;
-  #max;
+class Stack {
+  #items; // Stack items
+  #size; // Size of stack
+  #max; // max size of stack
   constructor() {
     this.#items = []
     this.#size = 0
-    this.#max = 1000000
+    this.#max = MAX_STACK_SIZE
+    this.push = this.push.bind(this)
   }
-  append(item) {
+  push(item) {
     this.#items[this.#size++] = item
     return this
   }
-  serve() {
+  pop() {
+    if (this.#size <= 0) {
+      console.error('No entries in the stack exist. Returning...')
+      return this
+    }
     this.#size--
-    return this.#items.splice(0,1)
+    return this.#items.pop()
   }
   delete(item) {
     let index = this.#items.indexOf(item)
@@ -43,11 +49,13 @@ class Queue {
   empty() {
     return this.#size === 0
   }
-  tail() {
+  top() {
     return this.#items[this.#items.length-1]
   }
-  retrieve() {
-    return this.#items[0]
+  popTop() {
+    let top = this.top()
+    this.delete(top)
+    return top
   }
   list() {
     for (let item of this.#items) console.log(item)
@@ -62,16 +70,13 @@ class Queue {
     }
     return this
   }
-  copyQueue() {
+  copyStack() {
     return [ ...this.#items ]
   }
   full() {
     return this.#size === this.#max
   }
-  serveAndRetrieve() {
-
-  }
 }
 
 
-module.exports = Queue
+module.exports = Stack
